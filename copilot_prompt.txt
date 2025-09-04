@@ -1,0 +1,40 @@
+I want to develop a chatbot that calls thellm through github marketplace.
+Keep API key in a .env file
+Check the following code if any further info is needed on LLM call:
+# Load API key from .env file
+load_dotenv()  # This loads variables from .env
+GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN", "")
+print("GITHUB_TOKEN loaded:", repr(GITHUB_TOKEN))
+
+client = ChatCompletionsClient(
+    endpoint="https://models.github.ai/inference",
+    credential=AzureKeyCredential(GITHUB_TOKEN),
+)
+
+def call_github_llm(prompt, max_tokens=2048):
+    response = client.complete(
+        messages=[UserMessage(prompt)],
+        model="openai/gpt-4.1",
+        max_tokens=max_tokens,
+    )
+    return response.choices[0].message.content
+
+I should be able to create new chat and also have chat history.
+
+Generate a Streamlit-based chatbot UI with the following features:
+
+1. A main chat window that displays messages from the user and the assistant in a conversational format.
+2. A text input box at the bottom where the user can type messages and press Enter to send.
+3. The assistant responses should be shown just like in a chat app.
+4. There should be a sidebar with a "New Chat" button. 
+   - Clicking "New Chat" clears the current conversation and starts a fresh one.
+   - Each chat should maintain its own context and message history.
+5. The app should remember multiple chats:
+   - Store each chat’s conversation history separately in memory (e.g., a list of chats, where each chat has a list of messages).
+   - Allow the user to switch between different chats from the sidebar (like a conversation list).
+6. Use a clean, modern UI styling similar to ChatGPT, with a catchy yet minimal color scheme.
+7. Structure the code in multiple files:
+   - app.py → main Streamlit entry point.
+   - chat_manager.py → handles storing multiple chats and their histories.
+   - llm.py → a placeholder function that takes user input and returns a dummy assistant response (to be replaced with an actual LLM later).
+
